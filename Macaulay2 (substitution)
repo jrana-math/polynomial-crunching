@@ -5,9 +5,11 @@ f_1 = sub(f, {x_1=>x_11, x_2=>x_12, x_3=>x_13, x_4=>x_21, x_5=>x_22, x_6=>x_23})
 
 \\ Ok, I found out what was going wrong with the above code. Here is the fixed version. I changed the variables x_1, ..., x_6 by a, ..., f
 \\ since I personally think that it makes the code simpler and prevent us from confusing x_1, ..., x_6 with the variables x_11, ..., x_27.
-\\ One of the things that I noted is that declaring a variable by f_1 - instead of, say, f - gives an error in this case ( Why?).
+\\ One of the things that I noted is that declaring a variable by f_1 - instead of, say, f - gives an error in this case(Why?*).
 \\ Also, we should substitute the values of the matrix and then take its determinant instead of doing the other way around, because by 
 \\ doing the latter we would also get an error when doing the substitution. 
+\\*The reason why this happens is that, when we have a matrix f, by typing f_1 we would actually perform a kind of operation on it in a way
+\\ that would make it a non square matrix (assuming that originally we are working with a square one).
 
 A = QQ[a .. f]; R = QQ[x_11, x_12, x_13, x_14, x_15, x_16, x_17, x_21, x_22, x_23, x_24, x_25, x_26, x_27]
 M_1 = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
