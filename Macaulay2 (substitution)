@@ -33,3 +33,29 @@ f7 = sub(M, {a=>x_12, b=>x_13, c=>x_16, d=>x_22, e=>x_23, f=>x_26})
 f8 = sub(M, {a=>x_14, b=>x_15, c=>x_16, d=>x_24, e=>x_25, f=>x_26})
 g1 = (det f1)*(det f2)*(det f3)*(det f4)-(det f5)*(det f6)*(det f7)*(det f8)
 
+// Extending the codes above. Now we have Φ(a, ..., f)=g1, Φ(a, b, c, d, e, g)=g2, and Φ(a, b, c, d, f, g)=g3.
+
+A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}]
+M = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
+f1 = sub(M, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23})
+f2 = sub(M, {a=>x_11, b=>x_14, c=>x_15, d=>x_21, e=>x_24, f=>x_25})
+f3 = sub(M, {a=>x_12, b=>x_14, c=>x_16, d=>x_22, e=>x_24, f=>x_26})
+f4 = sub(M, {a=>x_13, b=>x_15, c=>x_16, d=>x_23, e=>x_25, f=>x_26})
+f5 = sub(M, {a=>x_11, b=>x_12, c=>x_14, d=>x_21, e=>x_22, f=>x_24})
+f6 = sub(M, {a=>x_11, b=>x_13, c=>x_15, d=>x_21, e=>x_23, f=>x_25})
+f7 = sub(M, {a=>x_12, b=>x_13, c=>x_16, d=>x_22, e=>x_23, f=>x_26})
+f8 = sub(M, {a=>x_14, b=>x_15, c=>x_16, d=>x_24, e=>x_25, f=>x_26})
+g1 = (det f1)*(det f2)*(det f3)*(det f4)-(det f5)*(det f6)*(det f7)*(det f8)
+
+f9 = sub(M, {a=>x_12, b=>x_14, c=>x_17, d=>x_22, e=>x_24, f=>x_27})
+f10 = sub(M, {a=>x_13, b=>x_15, c=>x_17, d=>x_23, e=>x_25, f=>x_27})
+f11 = sub(M, {a=>x_12, b=>x_13, c=>x_17, d=>x_22, e=>x_23, f=>x_27})
+f12 = sub(M, {a=>x_14, b=>x_15, c=>x_17, d=>x_24, e=>x_25, f=>x_27})
+g2 = (det f1)*(det f2)*(det f9)*(det f10)-(det f5)*(det f6)*(det f11)*(det f12)
+
+f13 = sub(M, {a=>x_11, b=>x_14, c=>x_16, d=>x_21, e=>x_24, f=>x_26})
+f14 = sub(M, {a=>x_13, b=>x_16, c=>x_17, d=>x_23, e=>x_26, f=>x_27})
+f15 = sub(M, {a=>x_11, b=>x_13, c=>x_16, d=>x_21, e=>x_23, f=>x_26})
+f16 = sub(M, {a=>x_12, b=>x_13, c=>x_17, d=>x_22, e=>x_23, f=>x_27})
+f17 = sub(M, {a=>x_14, b=>x_16, c=>x_17, d=>x_24, e=>x_26, f=>x_27})
+g3 = (det f1)*(det f13)*(det f9)*(det f14)-(det f5)*(det f15)*(det f16)*(det f17)
