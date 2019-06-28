@@ -3,17 +3,33 @@ M = matrix{{1, 1, 1}, {x_1, x_2, x_3}, {x_4, x_5, x_6}}
 f = det M
 f_1 = sub(f, {x_1=>x_11, x_2=>x_12, x_3=>x_13, x_4=>x_21, x_5=>x_22, x_6=>x_23})
 
-\\ Ok, I found out what was going wrong with the above code. Here is the fixed version. I changed the variables x_1, ..., x_6 by a, ..., f
-\\ since I personally think that it makes the code simpler and prevent us from confusing x_1, ..., x_6 with the variables x_11, ..., x_27.
-\\ One of the things that I noted is that declaring a variable by f_1 - instead of, say, f - gives an error in this case(Why?*).
-\\ Also, we should substitute the values of the matrix and then take its determinant instead of doing the other way around, because by 
-\\ doing the latter we would also get an error when doing the substitution. 
-\\*The reason why this happens is that, when we have a matrix f, by typing f_1 we would actually perform a kind of operation on it in a way
-\\ that would make it a non square matrix (assuming that originally we are working with a square one).
+// Ok, I found out what was going wrong with the above code. Here is the fixed version. I changed the variables x_1, ..., x_6 by a, ..., f
+// since I personally think that it makes the code simpler and prevent us from confusing x_1, ..., x_6 with the variables x_11, ..., x_27.
+// One of the things that I noted is that declaring a variable by f_1 - instead of, say, f - gives an error in this case(Why?*).
+// Also, we should substitute the values of the matrix and then take its determinant instead of doing the other way around, because by 
+// doing the latter we would also get an error when doing the substitution. 
+//*The reason why this happens is that, when we have a matrix f, by typing f_1 we would actually perform a kind of operation on it in a way
+// that would make it a non square matrix (assuming that originally we are working with a square one).
 
 A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}]
 M_1 = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
 f1 = sub(M_1, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23})
 det f1
 
+
+// I am updating again the codes. (The codes above can be ignored). Here, I created other functions f1, f2, ..., f8 that would be the 3 x 3
+// matrices of which we took the determinant in Remark 3.3 - i.e. |abc|, |ade|, and so on. Instead of printing every determinant, I'm using
+// them only when computing the polynomial Φ. The function g1, for example, would be the same as Φ(a, ..., f).
+
+A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}]
+M = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
+f1 = sub(M, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23})
+f2 = sub(M, {a=>x_11, b=>x_14, c=>x_15, d=>x_21, e=>x_24, f=>x_25})
+f3 = sub(M, {a=>x_12, b=>x_14, c=>x_16, d=>x_22, e=>x_24, f=>x_26})
+f4 = sub(M, {a=>x_13, b=>x_15, c=>x_16, d=>x_23, e=>x_25, f=>x_26})
+f5 = sub(M, {a=>x_11, b=>x_12, c=>x_14, d=>x_21, e=>x_22, f=>x_24})
+f6 = sub(M, {a=>x_11, b=>x_13, c=>x_15, d=>x_21, e=>x_23, f=>x_25})
+f7 = sub(M, {a=>x_12, b=>x_13, c=>x_16, d=>x_22, e=>x_23, f=>x_26})
+f8 = sub(M, {a=>x_14, b=>x_15, c=>x_16, d=>x_24, e=>x_25, f=>x_26})
+g1 = (det f1)*(det f2)*(det f3)*(det f4)-(det f5)*(det f6)*(det f7)*(det f8)
 
