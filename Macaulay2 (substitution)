@@ -11,7 +11,8 @@ f_1 = sub(f, {x_1=>x_11, x_2=>x_12, x_3=>x_13, x_4=>x_21, x_5=>x_22, x_6=>x_23})
 \\*The reason why this happens is that, when we have a matrix f, by typing f_1 we would actually perform a kind of operation on it in a way
 \\ that would make it a non square matrix (assuming that originally we are working with a square one).
 
-A = QQ[a .. f]; R = QQ[x_11, x_12, x_13, x_14, x_15, x_16, x_17, x_21, x_22, x_23, x_24, x_25, x_26, x_27]
+A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}]
 M_1 = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
 f = sub(M_1, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23})
 det f
+
