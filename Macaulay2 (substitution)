@@ -115,5 +115,10 @@ f26 = sub(M, {a=>x_12, b=>x_13, c=>x_15, d=>x_22, e=>x_23, f=>x_25})
 f27 = sub(M, {a=>x_12, b=>x_14, c=>x_16, d=>x_22, e=>x_24, f=>x_26})
 g7 = (det f24)*(det f25)*(det f10)*(det f17)-(det f26)*(det f27)*(det f23)*(det f21)
 
+I = ideal(g1, g2, g3, g4, g5, g6, g7)
+gens gb I
+gens I
+for i to 5 list (for j to 6 list (o39_(0, i)==o40_(0,j)))
+
 
 
