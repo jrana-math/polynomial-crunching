@@ -5,6 +5,7 @@ for i to 5 list (for j to 6 list (o38_(0, i)==o39_(0,j)))
 -- trying to figure it out*), but once we make it work the rest of the additional code will work properly and we will know how many
 -- matches are there.
 -- *Edit: It might be working now!
+-- I think that on line 55, we can replace "list" by "do".
 
 truncateOutput 300
 A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}];
