@@ -26,6 +26,9 @@ M8 = matrix{{1, 1, 1}, {x_{1i_3}, x_{1i_4}, x_{1i_5}}, {x_{2i_3}, x_{2i_4}, x_{2
 -- the other takes care of the elements in these sets - so, for a fixed m, it would go through (L#m)#0, (L#m)#1, ..., (L#m)#5. Inside
 -- both loops, we would substitute, for each fixed m, i_0, i_1, ..., i_5 by (L#m)#0, (L#m)#1, ..., (L#m)#5.
 
+--(This is Andrew)
+--Could we potentially just have the subscripts be things like x_{1(L#m)#1}, so we don't need to declare more variables than necessary?
+
 
 -- We first define n>6.
 
