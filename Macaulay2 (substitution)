@@ -2,8 +2,9 @@
 for i to 5 list (for j to 6 list (o38_(0, i)==o39_(0,j)))
 
 -- I added some stuffs at the end that, ideally, would work as a counter for the number of matches. The for loop isn't work yet (I'm
--- trying to figure it out), but once we make it work the rest of the additional code will work properly and we will know how many
+-- trying to figure it out*), but once we make it work the rest of the additional code will work properly and we will know how many
 -- matches are there.
+-- *Edit: It might be working now!
 
 truncateOutput 300
 A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}];
@@ -50,15 +51,9 @@ I = ideal(g1, g2, g3, g4, g5, g6, g7);
 gens gb I;
 gens I;
 n=0;
-for i to 5 do 
-(for j to 6 do (o38_(0, i)==o39_(0,j)
-if (o38_(0, i)==o39_(0,j)  then n=n+1))
-text = "The number of total matches is ";
+for i to 5 list (for j to 6 do (if o38_(0, i)==o39_(0,j) then n=n+1));
+text = "The total number of matches is ";
 nonumber = toString(n);
-d = ".";
-p = text | nonumber | d;
-print p
-
-
-
-
+dot = ".";
+p = text | nonumber | dot;
+p
