@@ -5,9 +5,7 @@ for i to 5 list (for j to 6 list (o38_(0, i)==o39_(0,j)))
 -- trying to figure it out*), but once we make it work the rest of the additional code will work properly and we will know how many
 -- matches are there.
 -- *Edit: It might be working now!
--- I think that on line 55, we can replace "list" by "do".
 
-truncateOutput 300
 A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}];
 M = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}};
 f1 = sub(M, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23});
@@ -49,10 +47,10 @@ f24 = sub(M, {a=>x_12, b=>x_15, c=>x_16, d=>x_22, e=>x_25, f=>x_26});
 f25 = sub(M, {a=>x_12, b=>x_13, c=>x_15, d=>x_22, e=>x_23, f=>x_25});
 g7 = (det f23)*(det f24)*(det f10)*(det f16)-(det f25)*(det f3)*(det f22)*(det f20);
 I = ideal(g1, g2, g3, g4, g5, g6, g7);
-groebner = gens gb I;
-notgroebner = gens I;
+gens gb I;
+gens I;
 n=0;
-for i to 5 list (for j to 6 do (if groebner_(0, i)==notgroebner_(0,j) then n=n+1));
+for i to 5 do (for j to 6 do (if o37_(0, i)==o38_(0,j) then n=n+1));
 text = "The total number of matches is ";
 nonumber = toString(n);
 dot = ".";
