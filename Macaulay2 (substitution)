@@ -1,7 +1,9 @@
-// The for-loop from our previous codes that Andrew wrote
+-- Apparently comments on Macaulay2 are started with "--" instead of with "//", so let's use it the correct way.
 for i to 5 list (for j to 6 list (o38_(0, i)==o39_(0,j)))
 
-//
+-- I added some stuffs at the end that, ideally, would work as a counter for the number of matches. The for loop isn't work yet (I'm
+-- trying to figure it out), but once we make it work the rest of the additional code will work properly and we will know how many
+-- matches are there.
 
 truncateOutput 300
 A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}];
