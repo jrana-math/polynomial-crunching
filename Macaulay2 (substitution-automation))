@@ -53,3 +53,25 @@ M8 = matrix{{1, 1, 1}, {x_{1(L#i)#3}, x_{1(L#i)#4}, x_{1(L#i)#5}}, {x_{2(L#i)#3}
 gd=det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8)
 d=d+1);
 for i to binomial(n, 6) list (gd)
+
+-- Below is the first implementation that Andrew was able to run without errors.
+-- It doesn't quite work though...we need to save the gd values before they get overwritten.
+
+R = QQ[splice {x_11 .. x_17, x_21 .. x_27}];
+M = genericMatrix(R, 2, 7);
+L = subsets(7, 6);
+
+for i to (#L-1) do 
+(
+M1 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#2)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#2)}};
+M2 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#3), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#3), M_(1, L#i#4)}};
+M3 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#3), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#3), M_(1, L#i#5)}};
+M4 = matrix{{1, 1, 1}, {M_(0, L#i#2), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#2), M_(1, L#i#4), M_(1, L#i#5)}};
+M5 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#3)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#3)}};
+M6 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#2), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#2), M_(1, L#i#4)}};
+M7 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}};
+M8 = matrix{{1, 1, 1}, {M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}};
+gd=det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8)
+);
+
+for i to #L list (gd)
