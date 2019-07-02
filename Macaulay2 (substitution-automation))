@@ -22,3 +22,19 @@ M8 = matrix{{1, 1, 1}, {x_{1i_3}, x_{1i_4}, x_{1i_5}}, {x_{2i_3}, x_{2i_4}, x_{2
 -- and the set containing all the subsets of order 6 of [7]. This set will have 7 elements. We take the first element, which is a set,
 -- by L#0. Then we have that L#0 is a set and, because of that, we can compute (L#0)#0 to get the first element of this set, (L#0)#1 
 -- to get the second, and so on.
+-- In genereral, I think that we would need a nested for-loop (2 loops), where one takes care of the elements (subsets) L#0, L#1, ..., and
+-- the other takes care of the elements in these sets - so, for a fixed m, it would go through (L#m)#0, (L#m)#1, ..., (L#m)#5. Inside
+-- both loops, we would substitute, for each fixed m, i_0, i_1, ..., i_5 by (L#m)#0, (L#m)#1, ..., (L#m)#5.
+
+
+-- We first define n>6.
+n=7;
+-- We then define the rings accordingly.
+A=QQ[]; R=QQ[];
+-- Then we input the set of all subsets of [n] of order 6.
+L=subsets(n, 6);
+-- Now, we use the nested for-loop to go through every possibility. We declare the substituted matrices M1, M2, ..., M8 as f1, f2, ...,
+-- f8, f9, f10, ..., f16, ... - in general, fj would represent a substitution based on Mj', where j' is the least residue of j in Z_8.
+for i to 5 do (for j to 6 do 
+
+);
