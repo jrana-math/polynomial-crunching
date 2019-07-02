@@ -54,12 +54,14 @@ gd=det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8)
 d=d+1);
 for i to binomial(n, 6) list (gd)
 
--- Below is the first implementation that Andrew was able to run without errors.
--- It doesn't quite work though...we need to save the gd values before they get overwritten.
+-- Below is a functional implementation! I couldn't get the n to work for some weird reason so it has to be
+-- changed manually in four places, all in the first three lines of the program. Otherwise this works very
+-- quickly and I'm very happy with it!
 
 R = QQ[splice {x_11 .. x_17, x_21 .. x_27}];
 M = genericMatrix(R, 2, 7);
 L = subsets(7, 6);
+notgroebner = {};
 
 for i to (#L-1) do 
 (
@@ -71,7 +73,19 @@ M5 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#3)}, {M_(1, L#i#0)
 M6 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#2), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#2), M_(1, L#i#4)}};
 M7 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}};
 M8 = matrix{{1, 1, 1}, {M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}};
-gd=det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8)
+g = det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8);
+notgroebner = append(notgroebner, g);
 );
 
-for i to #L list (gd)
+I = ideal(notgroebner);
+groebner = gens gb I;
+notgroebnersize = #notgroebner
+groebnersize = numgens source groebner
+
+n=0;
+for i to (groebnersize - 1) do (for j to (notgroebnersize-1) do (if groebner_(0, i) == notgroebner#j then n=n+1));
+text = "The total number of matches is ";
+nonumber = toString(n);
+dot = ".";
+p = text | nonumber | dot;
+p
