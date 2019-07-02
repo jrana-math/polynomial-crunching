@@ -14,4 +14,11 @@ M8 = matrix{{1, 1, 1}, {x_{1i_3}, x_{1i_4}, x_{1i_5}}, {x_{2i_3}, x_{2i_4}, x_{2
 -- a_j's and compute the determinantal polynomial det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8), where
 -- all matrices M1, M2, ..., M8 had their entries replaced correctly. 
 
--- subsets(n , 6) gives us all the subsets of order 6 of {0, 1, ..., n-1}
+-- subsets(n , 6) gives us all the subsets of order 6 of [n]={0, 1, ..., n-1}
+-- We can list the first, the second, and, in general, the n-th element of a subset declared as L by L#0, L#1 and L#{n-1}.
+
+-- First, we get the set containing all the subsets of order 6 of [n]. Then, we somehow need to take each of this elements -
+-- which are subsets of [n] - and take their elements. The idea would be to list the elements twice. Example: Suppose we have n=7
+-- and the set containing all the subsets of order 6 of [7]. This set will have 7 elements. We take the first element, which is a set,
+-- by L#0. Then we have that L#0 is a set and, because of that, we can compute (L#0)#0 to get the first element of this set, (L#0)#1 
+-- to get the second, and so on.
