@@ -1,14 +1,6 @@
 -- The idea I had is to first denote the eight 3 x 3 matrices from which we will take the determinant to get the polynomial ϕ by M1, M2, 
 -- ..., M8. Note that the codes below are not necessarily in order.
 
-M1 = matrix{{1, 1, 1}, {x_{1i_0}, x_{1i_1}, x_{1i_2}}, {x_{2i_0}, x_{2i_1}, x_{2i_2}}};
-M2 = matrix{{1, 1, 1}, {x_{1i_0}, x_{1i_3}, x_{1i_4}}, {x_{2i_0}, x_{2i_3}, x_{2i_4}}};
-M3 = matrix{{1, 1, 1}, {x_{1i_1}, x_{1i_3}, x_{1i_5}}, {x_{2i_1}, x_{2i_3}, x_{2i_5}}};
-M4 = matrix{{1, 1, 1}, {x_{1i_2}, x_{1i_4}, x_{1i_5}}, {x_{2i_2}, x_{2i_4}, x_{2i_5}}};
-M5 = matrix{{1, 1, 1}, {x_{1i_0}, x_{1i_1}, x_{1i_3}}, {x_{2i_0}, x_{2i_1}, x_{2i_3}}};
-M6 = matrix{{1, 1, 1}, {x_{1i_0}, x_{1i_2}, x_{1i_4}}, {x_{2i_0}, x_{2i_2}, x_{2i_4}}};
-M7 = matrix{{1, 1, 1}, {x_{1i_1}, x_{1i_2}, x_{1i_5}}, {x_{2i_1}, x_{2i_2}, x_{2i_5}}};
-M8 = matrix{{1, 1, 1}, {x_{1i_3}, x_{1i_4}, x_{1i_5}}, {x_{2i_3}, x_{2i_4}, x_{2i_5}}};
 
 -- Once we have that, for every subset of order 6 of {0, 1, ..., n-1}, say {a_0, a_1, ..., a_5}, we will need to replace the i_j's by
 -- a_j's and compute the determinantal polynomial det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8), where
@@ -47,8 +39,16 @@ L=subsets(n, 6);
 -- Every time before increasing i, we take d to be its successor so that we get a list of polynomials g1, g2, g3, ..., characterizing
 -- determinantal varierty in which we are interested. 
 
-for i to binomial(n,6) do (for j to 5 do
+for i to binomial(n,6) do 
 (i_j=(L#i)#j
-gd=det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8))
-d=d+1);
+M1 = matrix{{1, 1, 1}, {x_{1(L#i)#0}, x_{1(L#i)#1}, x_{1(L#i)#2}}, {x_{2(L#i)#0}, x_{2(L#i)#1}, x_{2(L#i)#2}}};
+M2 = matrix{{1, 1, 1}, {x_{1(L#i)#0}, x_{1(L#i)#3}, x_{1(L#i)#4}}, {x_{2(L#i)#0}, x_{2(L#i)#3}, x_{2(L#i)#4}}};
+M3 = matrix{{1, 1, 1}, {x_{1(L#i)#1}, x_{1(L#i)#3}, x_{1(L#i)#5}}, {x_{2(L#i)#1}, x_{2(L#i)#3}, x_{2(L#i)#5}}};
+M4 = matrix{{1, 1, 1}, {x_{1(L#i)#2}, x_{1(L#i)#4}, x_{1(L#i)#5}}, {x_{2(L#i)#2}, x_{2(L#i)#4}, x_{2(L#i)#5}}};
+M5 = matrix{{1, 1, 1}, {x_{1(L#i)#0}, x_{1(L#i)#1}, x_{1(L#i)#3}}, {x_{2(L#i)#0}, x_{2(L#i)#1}, x_{2(L#i)#3}}};
+M6 = matrix{{1, 1, 1}, {x_{1(L#i)#0}, x_{1(L#i)#2}, x_{1(L#i)#4}}, {x_{2(L#i)#0}, x_{2(L#i)#2}, x_{2(L#i)#4}}};
+M7 = matrix{{1, 1, 1}, {x_{1(L#i)#1}, x_{1(L#i)#2}, x_{1(L#i)#5}}, {x_{2(L#i)#1}, x_{2(L#i)#2}, x_{2(L#i)#5}}};
+M8 = matrix{{1, 1, 1}, {x_{1(L#i)#3}, x_{1(L#i)#4}, x_{1(L#i)#5}}, {x_{2(L#i)#3}, x_{2(L#i)#4}, x_{2(L#i)#5}}};
+gd=det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8)
+d=d+1)
 for i to binomial(n, 6) list (gd)
