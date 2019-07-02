@@ -1,174 +1,62 @@
-A = QQ[x_1, x_2, x_3, x_4, x_5, x_6]; R = QQ[x_11, x_12, x_13, x_14, x_15, x_16, x_17, x_21, x_22, x_23, x_24, x_25, x_26, x_27]
-M = matrix{{1, 1, 1}, {x_1, x_2, x_3}, {x_4, x_5, x_6}}
-f = det M
-f_1 = sub(f, {x_1=>x_11, x_2=>x_12, x_3=>x_13, x_4=>x_21, x_5=>x_22, x_6=>x_23})
-
-// Ok, I found out what was going wrong with the above code. Here is the fixed version. I changed the variables x_1, ..., x_6 by a, ..., f
-// since I personally think that it makes the code simpler and prevent us from confusing x_1, ..., x_6 with the variables x_11, ..., x_27.
-// One of the things that I noted is that declaring a variable by f_1 - instead of, say, f - gives an error in this case(Why?*).
-// Also, we should substitute the values of the matrix and then take its determinant instead of doing the other way around, because by 
-// doing the latter we would also get an error when doing the substitution. 
-// *The reason why this happens is that, when we have a matrix f, by typing f_1 we would actually perform a kind of operation on it in a way
-// that would make it a non square matrix (assuming that originally we are working with a square one).
-
-A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}]
-M_1 = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
-f1 = sub(M_1, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23})
-det f1
-
-
-// I am updating again the codes. (The codes above can be ignored). Here, I created other functions f1, f2, ..., f8 that would be the 3 x 3
-// matrices of which we took the determinant in Remark 3.3 - i.e. |abc|, |ade|, and so on. Instead of printing every determinant, I'm using
-// them only when computing the polynomial Φ. The function g1, for example, would be the same as Φ(a, ..., f).
-
-A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}]
-M = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
-f1 = sub(M, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23})
-f2 = sub(M, {a=>x_11, b=>x_14, c=>x_15, d=>x_21, e=>x_24, f=>x_25})
-f3 = sub(M, {a=>x_12, b=>x_14, c=>x_16, d=>x_22, e=>x_24, f=>x_26})
-f4 = sub(M, {a=>x_13, b=>x_15, c=>x_16, d=>x_23, e=>x_25, f=>x_26})
-f5 = sub(M, {a=>x_11, b=>x_12, c=>x_14, d=>x_21, e=>x_22, f=>x_24})
-f6 = sub(M, {a=>x_11, b=>x_13, c=>x_15, d=>x_21, e=>x_23, f=>x_25})
-f7 = sub(M, {a=>x_12, b=>x_13, c=>x_16, d=>x_22, e=>x_23, f=>x_26})
-f8 = sub(M, {a=>x_14, b=>x_15, c=>x_16, d=>x_24, e=>x_25, f=>x_26})
-g1 = (det f1)*(det f2)*(det f3)*(det f4)-(det f5)*(det f6)*(det f7)*(det f8)
-
-// Extending the codes above. Now we have Φ(a, ..., f)=g1, Φ(a, b, c, d, e, g)=g2, and Φ(a, b, c, d, f, g)=g3.
-
-A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}]
-M = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
-f1 = sub(M, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23})
-f2 = sub(M, {a=>x_11, b=>x_14, c=>x_15, d=>x_21, e=>x_24, f=>x_25})
-f3 = sub(M, {a=>x_12, b=>x_14, c=>x_16, d=>x_22, e=>x_24, f=>x_26})
-f4 = sub(M, {a=>x_13, b=>x_15, c=>x_16, d=>x_23, e=>x_25, f=>x_26})
-f5 = sub(M, {a=>x_11, b=>x_12, c=>x_14, d=>x_21, e=>x_22, f=>x_24})
-f6 = sub(M, {a=>x_11, b=>x_13, c=>x_15, d=>x_21, e=>x_23, f=>x_25})
-f7 = sub(M, {a=>x_12, b=>x_13, c=>x_16, d=>x_22, e=>x_23, f=>x_26})
-f8 = sub(M, {a=>x_14, b=>x_15, c=>x_16, d=>x_24, e=>x_25, f=>x_26})
-g1 = (det f1)*(det f2)*(det f3)*(det f4)-(det f5)*(det f6)*(det f7)*(det f8)
-
-f9 = sub(M, {a=>x_12, b=>x_14, c=>x_17, d=>x_22, e=>x_24, f=>x_27})
-f10 = sub(M, {a=>x_13, b=>x_15, c=>x_17, d=>x_23, e=>x_25, f=>x_27})
-f11 = sub(M, {a=>x_12, b=>x_13, c=>x_17, d=>x_22, e=>x_23, f=>x_27})
-f12 = sub(M, {a=>x_14, b=>x_15, c=>x_17, d=>x_24, e=>x_25, f=>x_27})
-g2 = (det f1)*(det f2)*(det f9)*(det f10)-(det f5)*(det f6)*(det f11)*(det f12)
-
-f13 = sub(M, {a=>x_11, b=>x_14, c=>x_16, d=>x_21, e=>x_24, f=>x_26})
-f14 = sub(M, {a=>x_13, b=>x_16, c=>x_17, d=>x_23, e=>x_26, f=>x_27})
-f15 = sub(M, {a=>x_11, b=>x_13, c=>x_16, d=>x_21, e=>x_23, f=>x_26})
-f16 = sub(M, {a=>x_12, b=>x_13, c=>x_17, d=>x_22, e=>x_23, f=>x_27})
-f17 = sub(M, {a=>x_14, b=>x_16, c=>x_17, d=>x_24, e=>x_26, f=>x_27})
-g3 = (det f1)*(det f13)*(det f9)*(det f14)-(det f5)*(det f15)*(det f16)*(det f17)
-
-
-// Ok, now we have all 7 polynomials that we get from the seven 6 x 6 minors of our 6 x 7 matrix. Using the same function Φ as in
-// Remark 3.3, we have that g1=Φ(a, ..., f), g2=Φ(a, b, c, d, e, g), g3=Φ(a, b, c, d, f, g), g4=Φ(a, b, c, e, f, g),
-// g5=Φ(a, b, d, e, f, g), g6=Φ(a, c, d, e, f, g) and g7=Φ(b, c, d, e, f, g). Also, we have f1=(abc), f2=(ade), f3=(bdf), f4=(cef),
-// f5=(abd), f6=(ace), f7=(bcf), f8=(def), f9=(bdg), f10=(ceg), f11=(bcg), f12=(deg), f13=(adf), f14=(cfg), f15=(acf), f16=(bcg),
-// f17=(dfg), f18=(aef), f19=(beg), f20=(abe), f21=(efg), f22=(acd), f23=(cdg), f24=(bcd), f25=(bef), f26=(bce), and f27=(bdf).
-// There are two things to note here. Firstly, the letters a, ..., g we are using here have nothing to do we the variables we use to
-// define the ring A. Secondly, whereas the paper use the notation |abc| to denote the determinant of the matrix whose columns are the 
-// coordinates of the points a, b, and c, we are using (abc) instead to denote the matrix - and not its determinant.
-// Although now we have way more code, it seems to work way faster than the other method, not to mention that now we don't need to list
-// the polynomials g1, ..., g7 after creating the ideal generated by them since we are the ones creating them from the 3 x 3 minors.
-
-truncateOutput 300
-A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}]
-M = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
-f1 = sub(M, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23})
-f2 = sub(M, {a=>x_11, b=>x_14, c=>x_15, d=>x_21, e=>x_24, f=>x_25})
-f3 = sub(M, {a=>x_12, b=>x_14, c=>x_16, d=>x_22, e=>x_24, f=>x_26})
-f4 = sub(M, {a=>x_13, b=>x_15, c=>x_16, d=>x_23, e=>x_25, f=>x_26})
-f5 = sub(M, {a=>x_11, b=>x_12, c=>x_14, d=>x_21, e=>x_22, f=>x_24})
-f6 = sub(M, {a=>x_11, b=>x_13, c=>x_15, d=>x_21, e=>x_23, f=>x_25})
-f7 = sub(M, {a=>x_12, b=>x_13, c=>x_16, d=>x_22, e=>x_23, f=>x_26})
-f8 = sub(M, {a=>x_14, b=>x_15, c=>x_16, d=>x_24, e=>x_25, f=>x_26})
-g1 = (det f1)*(det f2)*(det f3)*(det f4)-(det f5)*(det f6)*(det f7)*(det f8)
-
-f9 = sub(M, {a=>x_12, b=>x_14, c=>x_17, d=>x_22, e=>x_24, f=>x_27})
-f10 = sub(M, {a=>x_13, b=>x_15, c=>x_17, d=>x_23, e=>x_25, f=>x_27})
-f11 = sub(M, {a=>x_12, b=>x_13, c=>x_17, d=>x_22, e=>x_23, f=>x_27})
-f12 = sub(M, {a=>x_14, b=>x_15, c=>x_17, d=>x_24, e=>x_25, f=>x_27})
-g2 = (det f1)*(det f2)*(det f9)*(det f10)-(det f5)*(det f6)*(det f11)*(det f12)
-
-f13 = sub(M, {a=>x_11, b=>x_14, c=>x_16, d=>x_21, e=>x_24, f=>x_26})
-f14 = sub(M, {a=>x_13, b=>x_16, c=>x_17, d=>x_23, e=>x_26, f=>x_27})
-f15 = sub(M, {a=>x_11, b=>x_13, c=>x_16, d=>x_21, e=>x_23, f=>x_26})
-f16 = sub(M, {a=>x_12, b=>x_13, c=>x_17, d=>x_22, e=>x_23, f=>x_27})
-f17 = sub(M, {a=>x_14, b=>x_16, c=>x_17, d=>x_24, e=>x_26, f=>x_27})
-g3 = (det f1)*(det f13)*(det f9)*(det f14)-(det f5)*(det f15)*(det f16)*(det f17)
-
-f18 = sub(M, {a=>x_11, b=>x_15, c=>x_16, d=>x_21, e=>x_25, f=>x_26})
-f19 = sub(M, {a=>x_12, b=>x_15, c=>x_17, d=>x_22, e=>x_25, f=>x_27})
-f20 = sub(M, {a=>x_11, b=>x_12, c=>x_15, d=>x_21, e=>x_22, f=>x_25})
-f21 = sub(M, {a=>x_15, b=>x_16, c=>x_17, d=>x_25, e=>x_26, f=>x_27})
-g4 = (det f1)*(det f18)*(det f19)*(det f14)-(det f20)*(det f15)*(det f16)*(det f21)
-
-g5 = (det f5)*(det f18)*(det f19)*(det f17)-(det f20)*(det f13)*(det f9)*(det f21)
-
-f22 = sub(M, {a=>x_11, b=>x_13, c=>x_14, d=>x_21, e=>x_23, f=>x_24})
-f23 = sub(M, {a=>x_13, b=>x_14, c=>x_17, d=>x_23, e=>x_24, f=>x_27})
-g6 = (det f22)*(det f18)*(det f10)*(det f17)-(det f6)*(det f13)*(det f23)*(det f21)
-
-f24 = sub(M, {a=>x_12, b=>x_13, c=>x_14, d=>x_22, e=>x_23, f=>x_24})
-f25 = sub(M, {a=>x_12, b=>x_15, c=>x_16, d=>x_22, e=>x_25, f=>x_26})
-f26 = sub(M, {a=>x_12, b=>x_13, c=>x_15, d=>x_22, e=>x_23, f=>x_25})
-f27 = sub(M, {a=>x_12, b=>x_14, c=>x_16, d=>x_22, e=>x_24, f=>x_26})
-g7 = (det f24)*(det f25)*(det f10)*(det f17)-(det f26)*(det f27)*(det f23)*(det f21)
-
-I = ideal(g1, g2, g3, g4, g5, g6, g7)
-gens gb I
-gens I
-for i to 5 list (for j to 6 list (o40_(0, i)==o41_(0,j)))
-
-//Okay so it looks like in the previous version there were two polynomials we could get rid of. Here's an updated version:
-
-truncateOutput 300
-A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}]
-M = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}}
-f1 = sub(M, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23})
-f2 = sub(M, {a=>x_11, b=>x_14, c=>x_15, d=>x_21, e=>x_24, f=>x_25})
-f3 = sub(M, {a=>x_12, b=>x_14, c=>x_16, d=>x_22, e=>x_24, f=>x_26})
-f4 = sub(M, {a=>x_13, b=>x_15, c=>x_16, d=>x_23, e=>x_25, f=>x_26})
-f5 = sub(M, {a=>x_11, b=>x_12, c=>x_14, d=>x_21, e=>x_22, f=>x_24})
-f6 = sub(M, {a=>x_11, b=>x_13, c=>x_15, d=>x_21, e=>x_23, f=>x_25})
-f7 = sub(M, {a=>x_12, b=>x_13, c=>x_16, d=>x_22, e=>x_23, f=>x_26})
-f8 = sub(M, {a=>x_14, b=>x_15, c=>x_16, d=>x_24, e=>x_25, f=>x_26})
-g1 = (det f1)*(det f2)*(det f3)*(det f4)-(det f5)*(det f6)*(det f7)*(det f8)
-
-f9 = sub(M, {a=>x_12, b=>x_14, c=>x_17, d=>x_22, e=>x_24, f=>x_27})
-f10 = sub(M, {a=>x_13, b=>x_15, c=>x_17, d=>x_23, e=>x_25, f=>x_27})
-f11 = sub(M, {a=>x_12, b=>x_13, c=>x_17, d=>x_22, e=>x_23, f=>x_27})
-f12 = sub(M, {a=>x_14, b=>x_15, c=>x_17, d=>x_24, e=>x_25, f=>x_27})
-g2 = (det f1)*(det f2)*(det f9)*(det f10)-(det f5)*(det f6)*(det f11)*(det f12)
-
-f13 = sub(M, {a=>x_11, b=>x_14, c=>x_16, d=>x_21, e=>x_24, f=>x_26})
-f14 = sub(M, {a=>x_13, b=>x_16, c=>x_17, d=>x_23, e=>x_26, f=>x_27})
-f15 = sub(M, {a=>x_11, b=>x_13, c=>x_16, d=>x_21, e=>x_23, f=>x_26})
-f16 = sub(M, {a=>x_14, b=>x_16, c=>x_17, d=>x_24, e=>x_26, f=>x_27})
-g3 = (det f1)*(det f13)*(det f9)*(det f14)-(det f5)*(det f15)*(det f11)*(det f16)
-
-f17 = sub(M, {a=>x_11, b=>x_15, c=>x_16, d=>x_21, e=>x_25, f=>x_26})
-f18 = sub(M, {a=>x_12, b=>x_15, c=>x_17, d=>x_22, e=>x_25, f=>x_27})
-f19 = sub(M, {a=>x_11, b=>x_12, c=>x_15, d=>x_21, e=>x_22, f=>x_25})
-f20 = sub(M, {a=>x_15, b=>x_16, c=>x_17, d=>x_25, e=>x_26, f=>x_27})
-g4 = (det f1)*(det f17)*(det f18)*(det f14)-(det f19)*(det f15)*(det f11)*(det f20)
-
-g5 = (det f5)*(det f17)*(det f18)*(det f16)-(det f19)*(det f13)*(det f9)*(det f20)
-
-f21 = sub(M, {a=>x_11, b=>x_13, c=>x_14, d=>x_21, e=>x_23, f=>x_24})
-f22 = sub(M, {a=>x_13, b=>x_14, c=>x_17, d=>x_23, e=>x_24, f=>x_27})
-g6 = (det f21)*(det f17)*(det f10)*(det f16)-(det f6)*(det f13)*(det f22)*(det f20)
-
-f23 = sub(M, {a=>x_12, b=>x_13, c=>x_14, d=>x_22, e=>x_23, f=>x_24})
-f24 = sub(M, {a=>x_12, b=>x_15, c=>x_16, d=>x_22, e=>x_25, f=>x_26})
-f25 = sub(M, {a=>x_12, b=>x_13, c=>x_15, d=>x_22, e=>x_23, f=>x_25})
-g7 = (det f23)*(det f24)*(det f10)*(det f16)-(det f25)*(det f3)*(det f22)*(det f20)
-
-I = ideal(g1, g2, g3, g4, g5, g6, g7)
-gens gb I
-gens I
+// The for-loop from our previous codes that Andrew wrote
 for i to 5 list (for j to 6 list (o38_(0, i)==o39_(0,j)))
+
+//
+
+truncateOutput 300
+A = QQ[a .. f]; R = QQ[splice {x_11 .. x_17, x_21 .. x_27}];
+M = matrix{{1, 1, 1}, {a, b, c}, {d, e, f}};
+f1 = sub(M, {a=>x_11, b=>x_12, c=>x_13, d=>x_21, e=>x_22, f=>x_23});
+f2 = sub(M, {a=>x_11, b=>x_14, c=>x_15, d=>x_21, e=>x_24, f=>x_25});
+f3 = sub(M, {a=>x_12, b=>x_14, c=>x_16, d=>x_22, e=>x_24, f=>x_26});
+f4 = sub(M, {a=>x_13, b=>x_15, c=>x_16, d=>x_23, e=>x_25, f=>x_26});
+f5 = sub(M, {a=>x_11, b=>x_12, c=>x_14, d=>x_21, e=>x_22, f=>x_24});
+f6 = sub(M, {a=>x_11, b=>x_13, c=>x_15, d=>x_21, e=>x_23, f=>x_25});
+f7 = sub(M, {a=>x_12, b=>x_13, c=>x_16, d=>x_22, e=>x_23, f=>x_26});
+f8 = sub(M, {a=>x_14, b=>x_15, c=>x_16, d=>x_24, e=>x_25, f=>x_26});
+g1 = (det f1)*(det f2)*(det f3)*(det f4)-(det f5)*(det f6)*(det f7)*(det f8);
+
+f9 = sub(M, {a=>x_12, b=>x_14, c=>x_17, d=>x_22, e=>x_24, f=>x_27});
+f10 = sub(M, {a=>x_13, b=>x_15, c=>x_17, d=>x_23, e=>x_25, f=>x_27});
+f11 = sub(M, {a=>x_12, b=>x_13, c=>x_17, d=>x_22, e=>x_23, f=>x_27});
+f12 = sub(M, {a=>x_14, b=>x_15, c=>x_17, d=>x_24, e=>x_25, f=>x_27});
+g2 = (det f1)*(det f2)*(det f9)*(det f10)-(det f5)*(det f6)*(det f11)*(det f12);
+
+f13 = sub(M, {a=>x_11, b=>x_14, c=>x_16, d=>x_21, e=>x_24, f=>x_26});
+f14 = sub(M, {a=>x_13, b=>x_16, c=>x_17, d=>x_23, e=>x_26, f=>x_27});
+f15 = sub(M, {a=>x_11, b=>x_13, c=>x_16, d=>x_21, e=>x_23, f=>x_26});
+f16 = sub(M, {a=>x_14, b=>x_16, c=>x_17, d=>x_24, e=>x_26, f=>x_27});
+g3 = (det f1)*(det f13)*(det f9)*(det f14)-(det f5)*(det f15)*(det f11)*(det f16);
+
+f17 = sub(M, {a=>x_11, b=>x_15, c=>x_16, d=>x_21, e=>x_25, f=>x_26});
+f18 = sub(M, {a=>x_12, b=>x_15, c=>x_17, d=>x_22, e=>x_25, f=>x_27});
+f19 = sub(M, {a=>x_11, b=>x_12, c=>x_15, d=>x_21, e=>x_22, f=>x_25});
+f20 = sub(M, {a=>x_15, b=>x_16, c=>x_17, d=>x_25, e=>x_26, f=>x_27});
+g4 = (det f1)*(det f17)*(det f18)*(det f14)-(det f19)*(det f15)*(det f11)*(det f20);
+
+g5 = (det f5)*(det f17)*(det f18)*(det f16)-(det f19)*(det f13)*(det f9)*(det f20);
+
+f21 = sub(M, {a=>x_11, b=>x_13, c=>x_14, d=>x_21, e=>x_23, f=>x_24});
+f22 = sub(M, {a=>x_13, b=>x_14, c=>x_17, d=>x_23, e=>x_24, f=>x_27});
+g6 = (det f21)*(det f17)*(det f10)*(det f16)-(det f6)*(det f13)*(det f22)*(det f20);
+
+f23 = sub(M, {a=>x_12, b=>x_13, c=>x_14, d=>x_22, e=>x_23, f=>x_24});
+f24 = sub(M, {a=>x_12, b=>x_15, c=>x_16, d=>x_22, e=>x_25, f=>x_26});
+f25 = sub(M, {a=>x_12, b=>x_13, c=>x_15, d=>x_22, e=>x_23, f=>x_25});
+g7 = (det f23)*(det f24)*(det f10)*(det f16)-(det f25)*(det f3)*(det f22)*(det f20);
+I = ideal(g1, g2, g3, g4, g5, g6, g7);
+gens gb I;
+gens I;
+n=0;
+for i to 5 do 
+(for j to 6 do (o38_(0, i)==o39_(0,j)
+if (o38_(0, i)==o39_(0,j)  then n=n+1))
+text = "The number of total matches is ";
+nonumber = toString(n);
+d = ".";
+p = text | nonumber | d;
+print p
+
 
 
 
