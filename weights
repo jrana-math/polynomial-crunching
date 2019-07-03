@@ -41,8 +41,8 @@ U = unique(P);
 -- need to replace the number 7 to whatever natural greater than 5 with which we would like to work on lines 28, 45 (twice),
 -- 46 and 47.
 
-for i to #U-1 do
-(R = QQ[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder => {Weights => U#i, Lex}];
+for j to #U-1 do
+(R = QQ[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder => {Weights => U#j, Lex}];
 M = genericMatrix(R, 2, 7);
 L = subsets(7, 6);
 notgroebner = {};
