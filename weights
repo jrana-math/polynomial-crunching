@@ -6,7 +6,6 @@
 --So what we need to do is write something in the body of the inner loop that will add a "1" to the list
 --if the binary representation of i has a 1 there and a 0 otherwise.
 --I don't know how to do that yet but it seems like we should be able to figure it out today.
---I defined k to be equal to i so we can change its value as we go without messing up the outer loop.
 
 
 for i to (2^{2n}-1) do 
