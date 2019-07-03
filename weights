@@ -24,10 +24,9 @@ for i to (2^{2n}-1) do
 -- The set's cardinality is 2n, so we assign to n half of the order we want S to have - e.g. n=2 for |S|=4.
 
 n=2;
-S ={};
-for i to n-1 do 
-(S = append(S, 0));
-for i to n-1 do 
-(S = append(S, 1));
+S = {};
+for i to n-1 do (S = append(S, 0));
+for i to n-1 do (S = append(S, 1));
 S
-permutations S
+P = permutations S
+for i to #P-1 do (for j to #P-1 do (if P#i==P#j then (if i!=j then drop (P, P#j))))
