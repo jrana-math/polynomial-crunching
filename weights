@@ -1,0 +1,19 @@
+--Okay, so here's what I'm thinking.
+--What we want is for each outer loop to generate a new set of weights to run our other program with.
+--The inner loop is meant to form individual sets of weights, and the outer loop forms a list of all possible weight sets.
+--We can build each weight set by converting i to binary and then listing its digits.
+--Unfortunately, I don't think Macaulay has any built-in stuff relating to binary numbers.
+--So what we need to do is write something in the body of the inner loop that will add a "1" to the list
+--if the binary representation of i has a 1 there and a 0 otherwise.
+--I don't know how to do that yet but it seems like we should be able to figure it out today.
+--I defined k to be equal to i so we can change its value as we go without messing up the outer loop.
+
+
+for i to (2^{2n}-1) list 
+(
+    k = i;
+    for j from 1 to (2n) list
+    (
+        if 
+    )
+)
