@@ -8,16 +8,22 @@
 --I don't know how to do that yet but it seems like we should be able to figure it out today.
 
 
-for i to (2^{2n}-1) do 
+weights = {};
+weight = {};
+
+for i to (2^3-1) do 
 (
-    for j from 1 to (2n) do
+    weight = {};
+    for j from 1 to 3 do
     (
-        if (i%2^j < 2^{j-1})
-            add a 0
-        else
-            add a 1
+        k = if i%{2^j} < 2^{j-1} then 0;
+	else 1;
+	weight = append(weight, k);
     )
+    weights = append(weights, weight};
 )
+
+weights
 
 
 
