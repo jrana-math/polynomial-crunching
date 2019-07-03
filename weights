@@ -11,20 +11,21 @@
 weights = {};
 weight = {};
 
-for i to (2^3-1) do 
+for i to 2^(2n)-1 do 
 (
     weight = {};
-    for j from 1 to 3 do
+    for j from 1 to 2n do
     (
-        k = if i%{2^j} < 2^{j-1} then 0;
-	else 1;
+        k = 1;
+	if i%(2^j) < 2^(j-1) then k = 0;
 	weight = append(weight, k);
-    )
-    weights = append(weights, weight};
-)
+    );
+    weights = append(weights, weight);
+);
 
 weights
 
+--The above code makes a list, "weights", containing each possible set of binary weights.
 
 
 -- We start by defining n. Then we create an empty set S so that we can add elements to it. The next two for loops put
