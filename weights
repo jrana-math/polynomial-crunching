@@ -46,8 +46,8 @@ for a to #weights-1 do
 
     I = ideal(notgroebner);
     groebner = gens gb I;
-    notgroebnersize = #notgroebner
-    groebnersize = numgens source groebner
+    notgroebnersize = #notgroebner;
+    groebnersize = numgens source groebner;
 
     n=0;
     for i to (groebnersize - 1) do (for j to (notgroebnersize-1) do (if groebner_(0, i) == notgroebner#j then n=n+1));
@@ -55,10 +55,10 @@ for a to #weights-1 do
     nonumber = toString(n);
     dot = ".";
     p = text | nonumber | dot;
-    p
+    print p
 )
 
---The above code is Andrew's current attempt at combining everything we have.
+--The above code works!!!!
 
 
 -- We start by defining n. Then we create an empty set S so that we can add elements to it. The next two for loops put
