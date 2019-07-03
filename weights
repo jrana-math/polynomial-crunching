@@ -23,6 +23,8 @@ for i to 2^14-1 do
     weights = append(weights, weight);
 );
 
+matches = {};
+
 for a to #weights-1 do
 (
     R = QQ[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>{Weights=>weights#a, Lex}];
@@ -56,6 +58,7 @@ for a to #weights-1 do
     dot = ".";
     p = text | nonumber | dot;
     print p
+    if n == 6 then matches = append(matches, weights#a);
 )
 
 --The above code works!!!!
@@ -112,5 +115,6 @@ nonumber = toString(n);
 dot = ".";
 p = text | nonumber | dot;
 p)
+
 
 
