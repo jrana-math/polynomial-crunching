@@ -9,11 +9,13 @@
 --I defined k to be equal to i so we can change its value as we go without messing up the outer loop.
 
 
-for i to (2^{2n}-1) list 
+for i to (2^{2n}-1) do 
 (
-    k = i;
-    for j from 1 to (2n) list
+    for j from 1 to (2n) do
     (
-        if 
+        if (i%2^j < 2^{j-1})
+            add a 0
+        else
+            add a 1
     )
 )
