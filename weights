@@ -21,7 +21,9 @@ for i to (2^{2n}-1) do
 
 
 
--- The set's cardinality is 2n, so we assign to n half of the order we want S to have - e.g. n=2 for |S|=4.
+-- We start by defining n. Then we create an empty set S so that we can add elements to it. The next two for loops put
+-- n zeros and n ones in S, respectively. Then, we let P be all the permutations of S and then U be the subset of P which
+-- contains all combinations of the elements of S but without repeating them.
 
 n=2;
 S = {};
@@ -29,4 +31,4 @@ for i to n-1 do (S = append(S, 0));
 for i to n-1 do (S = append(S, 1));
 S
 P = permutations S
-unique(P)
+U = unique(P)
