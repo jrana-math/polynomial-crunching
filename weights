@@ -57,7 +57,7 @@ for a to #weights-1 do
     nonumber = toString(n);
     dot = ".";
     p = text | nonumber | dot;
-    print p
+    print p;
     if n == 6 then matches = append(matches, weights#a);
 )
 
