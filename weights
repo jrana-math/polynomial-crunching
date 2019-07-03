@@ -29,4 +29,4 @@ for i to n-1 do (S = append(S, 0));
 for i to n-1 do (S = append(S, 1));
 S
 P = permutations S
-for i to #P-1 do (for j to #P-1 do (if P#i==P#j then (if i!=j then drop (P, P#j))))
+unique(P)
