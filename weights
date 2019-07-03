@@ -29,17 +29,16 @@ n=7;
 S = {};
 for i to n-1 do (S = append(S, 0));
 for i to n-1 do (S = append(S, 1));
-S;
 P = permutations S;
 U = unique(P);
 
 -- The next goal is to somehow use the elements of U as weights in the ring R. There might be a way to define the variables 
 -- of R with a for-loop, so that we don't need to do anything manually besides assigning a value to n, but we can figure 
--- this out after we make the program work. The idea here is to create a for loop (line 44) that uses all possible weights
--- for a fixed natural number n and define the polynomial ring accordingly (line 45). Then, from line 46 on, I pasted the
+-- this out after we make the program work. The idea here is to create a for loop (line 43) that uses all possible weights
+-- for a fixed natural number n and define the polynomial ring accordingly (line 44). Then, from line 45 on, I pasted the
 -- codes Andrew wrote yesterday. Additionally to what he stressed on the other file, if we want to change the value of n, we
--- need to replace the number 7 to whatever natural greater than 5 with which we would like to work on lines 28, 45 (twice),
--- 46 and 47.
+-- need to replace the number 7 to whatever natural greater than 5 with which we would like to work on lines 28, 44 (twice),
+-- 45 and 46.
 
 for j to #U-1 do
 (R = QQ[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder => {Weights => U#j, Lex}];
