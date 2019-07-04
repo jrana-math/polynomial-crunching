@@ -59,7 +59,7 @@ for a to #weights-1 do
     p = text | nonumber | dot;
     print p;
     print weights#a;
-    if n == 6 then matches = append(matches, weights#a);
+    if n == #groebner then matches = append(matches, weights#a);
 )
 
 --The above code works!!!!
