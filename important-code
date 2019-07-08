@@ -1,7 +1,0 @@
-//This Macaulay2 code creates lets us do a preliminary check to see if the minors of a specific type of matrix form a Groebner basis under various orderings.
-R = QQ[x_11, x_12, x_13, x_14, x_15, x_16, x_17, x_21, x_22, x_23, x_24, x_25, x_26, x_27, MonomialOrder=>Eliminate 4] 
-M = matrix{{1, 1, 1, 1, 1, 1, 1}, {x_11^2, x_12^2, x_13^2, x_14^2, x_15^2, x_16^2, x_17^2}, {x_21^2, x_22^2, x_23^2, x_24^2, x_25^2, x_26^2, x_27^2}, {x_11, x_12, x_13, x_14, x_15, x_16, x_17}, { x_21, x_22, x_23, x_24, x_25, x_26, x_27}, {x_11*x_21, x_12*x_22, x_13*x_23, x_14*x_24, x_15*x_25, x_16*x_26, x_17*x_27}} 
-I = minors(6, M)
-gens gb I
-gens I
-for i to 5 list (for j to 6 list (o4_(0, i)==o5_(0,j)))
