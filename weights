@@ -139,7 +139,7 @@ for a to #weights-1 do
     
     ----------------------------------------------------------------------------------------------------------
     
-    weights = {};
+weights = {};
 weight = {};
 
 for i to 2^14-1 do 
@@ -182,31 +182,33 @@ for a to #weights-1 do
     notgroebnersize = #notgroebner;
     groebnersize = numgens source groebner;
     n=0;
-    p=0;
-    match=0;
+    flag=0;
     for i to groebnersize-1 do
     (
-        match=0;
+        flag=0;
         for j to notgroebnersize-1 do 
 	(
 	    --If we already have a match we move on to the next element of groebner.
-	    if match > 0 then break;
+	    if flag > 0 then break;
 	    --Otherwise we search for a match.
 	    for k from 1 to 100 do 
 	    (
+		print k;
 		--If we find a match then count it and break out.
-	        if k*groebner_(0, i) == notgroebner#j then
+	        if (k*groebner_(0, i) == notgroebner#j) then
 		(
 		    n=n+1;
-		    match=1;
+		    flag=1;
 		    break;
 		);
-		--If we get to the end and find no matches for an element of groebner we break out with p.
-		else if k=100 and j=notgroebnersize-1 then p=1;
 	    );
 	);
 	--Stop looking for matches if we know we don't have a groebner basis.
-	if p>0 then break;
+	if flag=0 then 
+	(
+	    print "NO MATCH";
+	    break;
+	);
     );
     text = "The total number of matches is ";
     nonumber = toString(n);
