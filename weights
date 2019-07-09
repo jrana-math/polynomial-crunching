@@ -193,18 +193,19 @@ for a to #weights-1 do
 	    --Otherwise we search for a match.
 	    for k from 1 to 100 do 
 	    (
-		print k;
 		--If we find a match then count it and break out.
 	        if (k*groebner_(0, i) == notgroebner#j) then
 		(
 		    n=n+1;
 		    flag=1;
+		    --print k;
+		    --print (k*groebner_(0, i)-notgroebner#j);
 		    break;
 		);
 	    );
 	);
 	--Stop looking for matches if we know we don't have a groebner basis.
-	if flag=0 then 
+	if flag==0 then 
 	(
 	    print "NO MATCH";
 	    break;
