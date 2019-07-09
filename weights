@@ -150,10 +150,10 @@ for a to #weights-1 do
     groebnersize = numgens source groebner;
 
     n=0;
-    j=0;
+    p=0;
     limit=(#notgroebner-#groebner)+1;
     for i to (groebnersize - 1) do (for j to (notgroebnersize-1) do 
-    ((while j < limit do (if groebner_(0, i) == notgroebner#j then n=n+1 else j=j+1)) break);
+    ((while p < limit do (if groebner_(0, i) == notgroebner#j then n=n+1 else p=p+1)) break);
     text = "The total number of matches is ";
     nonumber = toString(n);
     dot = ".";
