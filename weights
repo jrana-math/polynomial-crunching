@@ -207,7 +207,7 @@ for a to #weights-1 do
 	--Stop looking for matches if we know we don't have a groebner basis.
 	if flag==0 then 
 	(
-	    print "NO MATCH";
+	    --print "NO MATCH";
 	    break;
 	);
     );
