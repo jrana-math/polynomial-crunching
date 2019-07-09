@@ -136,5 +136,83 @@ for a to #weights-1 do
     print weights#a;
     if n == groebnersize then matches = append(matches, weights#a);
     );
+    
+    ----------------------------------------------------------------------------------------------------------
+    
+    weights = {};
+weight = {};
 
+for i to 2^14-1 do 
+(
+    weight = {};
+    for j from 1 to 14 do
+    (
+        k = 1;
+	if i%(2^j) < 2^(j-1) then k = 0;
+	weight = append(weight, k);
+    );
+    weights = append(weights, weight);
+);
 
+matches = {};
+
+for a to #weights-1 do
+(
+    R = ZZ/101[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>{Weights=>weights#a, Lex}];
+    M = genericMatrix(R, 2, 7);
+    L = subsets(7, 6);
+    notgroebner = {};
+
+    for i to (#L-1) do 
+    (
+	M1 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#2)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#2)}};
+	M2 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#3), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#3), M_(1, L#i#4)}};
+	M3 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#3), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#3), M_(1, L#i#5)}};
+	M4 = matrix{{1, 1, 1}, {M_(0, L#i#2), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#2), M_(1, L#i#4), M_(1, L#i#5)}};
+	M5 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#3)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#3)}};
+	M6 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#2), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#2), M_(1, L#i#4)}};
+	M7 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}};
+	M8 = matrix{{1, 1, 1}, {M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}};
+	g = det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8);
+	notgroebner = append(notgroebner, g);
+    );
+
+    I = ideal(notgroebner);
+    groebner = gens gb I;
+    notgroebnersize = #notgroebner;
+    groebnersize = numgens source groebner;
+    n=0;
+    p=0;
+    match=0;
+    for i to groebnersize-1 do
+    (
+        match=0;
+        for j to notgroebnersize-1 do 
+	(
+	    --If we already have a match we move on to the next element of groebner.
+	    if match > 0 then break;
+	    --Otherwise we search for a match.
+	    for k from 1 to 100 do 
+	    (
+		--If we find a match then count it and break out.
+	        if k*groebner_(0, i) == notgroebner#j then
+		(
+		    n=n+1;
+		    match=1;
+		    break;
+		);
+		--If we get to the end and find no matches for an element of groebner we break out with p.
+		else if k=100 and j=notgroebnersize-1 then p=1;
+	    );
+	);
+	--Stop looking for matches if we know we don't have a groebner basis.
+	if p>0 then break;
+    );
+    text = "The total number of matches is ";
+    nonumber = toString(n);
+    dot = ".";
+    p = text | nonumber | dot;
+    print p;
+    print weights#a;
+    if n == groebnersize then matches = append(matches, weights#a);
+    )
