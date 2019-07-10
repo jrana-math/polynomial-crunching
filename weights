@@ -72,6 +72,7 @@ for a to #weights-1 do
 ----------------------------------------------------------------------------------------------------------------------------
 
 
+-- Comments on lines 88-191:
 -- The sets weight and weights are different. weights is a collection of some 'weight's. They are both initialized as
 -- the empty set (lines 89 and 90) because that way we can create whichever set we like just by adding its elements. 
 -- weight is a string of ones and zeros. The frequency of one or zero happening varies between 0 and 7 while 
@@ -83,7 +84,6 @@ for a to #weights-1 do
 -- (line 94) that makes the set weight empty again, so we can repeat the process over and over. Immediately after the inner 
 -- for loop (line 101) we use the function append(setS, elementK) that adds elementK to SetS. This is also used on line 98
 -- to "add" the entries of the vectors weight.
---
 
 weights = {};
 weight = {};
@@ -101,13 +101,18 @@ for i to 2^14-1 do
 );
 
 
+-- Comments on lines 117-136:
+-- On line 115, #weights is the size of weights - i.e. how many different vectors we have. On line 119, we define the ring
+-- on which we are working. As one can see, its order depends on weights#a. In general, if we have a list S of length k>n-2,
+-- then S#(n-1) has as its output the nth element listed on the list (set) S. So our outer loop (lines 117-136) guarantees
+-- we deal with all our different 'weight's.
 --
 --
 --
 --
 --
 --
---
+
 
 for a to #weights-1 do
 (
