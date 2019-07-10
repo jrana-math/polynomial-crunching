@@ -69,16 +69,20 @@ for a to #weights-1 do
 
 
 ----------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------
 
 
-
--- The lists weight and weights are different. weights is a collection of different 'weight's. They are both initizialize as
--- the empty set because that way we can create the set we wish by adding its elements to our set. 
--- weight is a string of ones and zeros. The frequency of either happening varies between 0 and 7. 
--- 
---
---
---
+-- The sets weight and weights are different. weights is a collection of some 'weight's. They are both initialized as
+-- the empty set (lines 89 and 90) because that way we can create whichever set we like just by adding its elements. 
+-- weight is a string of ones and zeros. The frequency of one or zero happening varies between 0 and 7 while 
+-- freq(0)+freq(1)=2n always holds.
+-- We are more interested now in the case n=7, so that number means 'weights' is a set of vectors ('weight's) whose length  
+-- is 14 and entries are completed by 7 ones and zeros. 
+-- These 'weight's will be used along with the lex order to create several weight orders. 
+-- The inner for loop we use (lines 95-100) is to characterize the sets called weight. Before it, we have a local variable
+-- (line 94) that makes the set weight empty again, so we can repeat the process over and over. Immediately after the inner 
+-- for loop (line 101) we use the function append(setS, elementK) that adds elementK to SetS. This is also used on line 98
+-- to "add" the entries of the vectors weight.
 --
 
 weights = {};
@@ -96,7 +100,6 @@ for i to 2^14-1 do
     weights = append(weights, weight);
 );
 
-matches = {};
 
 --
 --
@@ -182,6 +185,7 @@ for a to #weights-1 do
     --
     --
     
+    matches = {};
     text = "The total number of matches is ";
     nonumber = toString(n);
     dot = ".";
