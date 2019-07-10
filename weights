@@ -68,10 +68,18 @@ for a to #weights-1 do
 
 
 
+----------------------------------------------------------------------------------------------------------------------------
+
+
+
+-- The lists weight and weights are different. weights is a collection of different 'weight's. They are both initizialize as
+-- the empty set because that way we can create the set we wish by adding its elements to our set. 
+-- weight is a string of ones and zeros. The frequency of either happening varies between 0 and 7. 
 -- 
 --
 --
-
+--
+--
 
 weights = {};
 weight = {};
@@ -89,6 +97,14 @@ for i to 2^14-1 do
 );
 
 matches = {};
+
+--
+--
+--
+--
+--
+--
+--
 
 for a to #weights-1 do
 (
@@ -111,76 +127,26 @@ for a to #weights-1 do
 	notgroebner = append(notgroebner, g);
     );
 
-    I = ideal(notgroebner);
-    groebner = gens gb I;
-    notgroebnersize = #notgroebner;
-    groebnersize = numgens source groebner;
-    n=0;
-    p=0;
-    for i to groebnersize-1 do
-    (
-        for j to notgroebnersize-1 do 
-	(
-	    for k from 1 to 100 do 
-	    (
-	        if k*groebner_(0, i) == notgroebner#j then n=n+1 else p=p+1;
-		if p>=1400 then break;
-	    );
-	);
-    );
-    text = "The total number of matches is ";
-    nonumber = toString(n);
-    dot = ".";
-    p = text | nonumber | dot;
-    print p;
-    print weights#a;
-    if n == groebnersize then matches = append(matches, weights#a);
-    );
-    
-    ----------------------------------------------------------------------------------------------------------
-    
-weights = {};
-weight = {};
-
-for i to 2^14-1 do 
-(
-    weight = {};
-    for j from 1 to 14 do
-    (
-        k = 1;
-	if i%(2^j) < 2^(j-1) then k = 0;
-	weight = append(weight, k);
-    );
-    weights = append(weights, weight);
-);
-
-matches = {};
-
-for a to #weights-1 do
-(
-    R = ZZ/101[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>{Weights=>weights#a, Lex}];
-    M = genericMatrix(R, 2, 7);
-    L = subsets(7, 6);
-    notgroebner = {};
-
-    for i to (#L-1) do 
-    (
-	M1 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#2)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#2)}};
-	M2 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#3), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#3), M_(1, L#i#4)}};
-	M3 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#3), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#3), M_(1, L#i#5)}};
-	M4 = matrix{{1, 1, 1}, {M_(0, L#i#2), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#2), M_(1, L#i#4), M_(1, L#i#5)}};
-	M5 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#3)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#3)}};
-	M6 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#2), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#2), M_(1, L#i#4)}};
-	M7 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}};
-	M8 = matrix{{1, 1, 1}, {M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}};
-	g = det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8);
-	notgroebner = append(notgroebner, g);
-    );
+--
+--
+--
 
     I = ideal(notgroebner);
     groebner = gens gb I;
     notgroebnersize = #notgroebner;
     groebnersize = numgens source groebner;
+    
+    --
+    --
+    --
+    --
+    --
+    --
+    --
+    --
+    --
+    --
+    
     n=0;
     flag=0;
     for i to groebnersize-1 do
@@ -211,6 +177,11 @@ for a to #weights-1 do
 	    break;
 	);
     );
+    
+    --
+    --
+    --
+    
     text = "The total number of matches is ";
     nonumber = toString(n);
     dot = ".";
