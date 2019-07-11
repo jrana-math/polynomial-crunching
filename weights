@@ -154,16 +154,16 @@ for a to #weights-1 do
     notgroebnersize = #notgroebner;
     groebnersize = numgens source groebner;
     
-    --
-    --
-    --
-    --
-    --
-    --
-    --
-    --
-    --
-    --
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
     
     n=0;
     flag=0;
@@ -196,9 +196,12 @@ for a to #weights-1 do
 	);
     );
     
-    --
-    --
-    --
+-- Comments on lines 206-213:
+-- On line 206 we create the empty set matches, which will eventually be the set of weights under which (and along with
+-- the lex order) we have that the set groebner is the subset of the set notgroebner. On line 208, we make the integer n
+-- into a string, where n is the number of matches between polynomials in the sets groebner and notgroebner. We then
+-- print (line 211) the total number of matches and (line 212) we print the weight weights#a from the bigger loop (lines 
+-- 125-214) and when matches happen as often as elements in the set groebner, then we add such a weight to the set matches. 
     
     matches = {};
     text = "The total number of matches is ";
