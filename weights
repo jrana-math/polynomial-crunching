@@ -125,7 +125,8 @@ for i to 2^14-1 do
 for a to #weights-1 do
 (
     R = ZZ/101[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>{Weights=>weights#a, Lex}];
-    M = matrix{{x_11 .. x_17}, {x_21 .. x_27}};
+    N = vars R;
+    M = matrix{{N_(0, 0), N_(0, 1), N_(0, 2), N_(0, 3), N_(0, 4), N_(0, 5), N_(0, 6)}, {N_(0, 7), N_(0, 8), N_(0, 9), N_(0, 10), N_(0, 11), N_(0, 12), N_(0, 13)}};
     L = subsets(7, 6);
     notgroebner = {};
 
@@ -161,7 +162,7 @@ for a to #weights-1 do
 -- This, in turn, makes the program run faster.
 -- Note that we have three for loops here. One that acts on the groebner basis (lines 170-197), one on the set of determinantal 
 -- polynomials (lines 173-190) and the last on the integers from 1 to 100 (lines 178-188) due to our Galois field Z/101.
---
+--It seems that the matches are always occuring at k=1 or k=100, which could allow us to speed up the program much more.
 --
 --
     
