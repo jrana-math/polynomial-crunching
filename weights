@@ -125,8 +125,8 @@ for i to 2^14-1 do
 for a to #weights-1 do
 (
     R = ZZ/101[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>{Weights=>weights#a, Lex}];
-    M = matrix{splice{x_11 .. x_17}, splice{x_21 .. x_27}}
-    L = subsets(7, 6)
+    M = matrix{splice{x_11 .. x_17}, splice{x_21 .. x_27}};
+    L = subsets(7, 6);
     notgroebner = {};
 
     for i to (#L-1) do 
