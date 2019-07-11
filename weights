@@ -72,7 +72,7 @@ for a to #weights-1 do
 ----------------------------------------------------------------------------------------------------------------------------
 
 
--- Comments on lines 88-191:
+-- Comments on lines 88-101:
 -- The sets weight and weights are different. weights is a collection of some 'weight's. They are both initialized as
 -- the empty set (lines 89 and 90) because that way we can create whichever set we like just by adding its elements. 
 -- weight is a string of ones and zeros. The frequency of one or zero happening varies between 0 and 7 while 
@@ -101,14 +101,22 @@ for i to 2^14-1 do
 );
 
 
--- Comments on lines 117-136:
--- On line 115, #weights is the size of weights - i.e. how many different vectors we have. On line 119, we define the ring
+-- Comments on lines 125-144:
+-- On line 125, #weights is the size of weights - i.e. how many different vectors we have. On line 127, we define the ring
 -- on which we are working. As one can see, its order depends on weights#a. In general, if we have a list S of length k>n-2,
--- then S#(n-1) has as its output the nth element listed on the list (set) S. So our outer loop (lines 117-136) guarantees
--- we deal with all our different 'weight's.
---
---
---
+-- then S#(n-1) has as its output the nth element listed on the list (set) S. So weights#a is the (a+1)th weight listed on
+-- the set weights. Also, our outer loop (lines 125-144) guarantees we deal with all of the different 'weight's.
+-- On line 128 we define a 2x7 matrix M whose first and second rows would be, respectively, {x_11, ..., x_17} and {x_21, ..., x_27}.
+-- On line 129 we define L to be the set of all subsets of order 6 of the set {0, 1, ..., 6}. On line 130, we create an 
+-- empty set called notgroebner. This set, in turn, will be the one containing our seven (at least for n=7) determinantal polynomials.
+-- On the body of the for loop (lines 134-143), we first (134-141) create eight 3x3 matrices which we will use to get each of
+-- the seven (or n choose 6 in general) determinantal polynomials. On this part of the loop's body, we see a bunch of elements
+-- of the form L#i#j for an integer j in {0, 1, ..., }. The process for getting such a number is as follows: since L
+-- is the set containing all the subsets of order 6 of {0, 1, ..., 6}, L#i will be one of these subsets - e.g. i=1
+-- gives us {0, 1, ..., 5}. Once we have L#i, we take L#i#j, which is the (j+1)th element listed, from left to right, in L#i.
+-- Secondly (line 142), we define, using remark 3.3 from the paper, one of the determinantal polynomials by g 
+-- and then (line 143) add g to the set notgroebner. We do this process until notgroebner has all the n choose 6 polynomials
+-- that it is supposed to have. 
 --
 --
 --
@@ -117,8 +125,8 @@ for i to 2^14-1 do
 for a to #weights-1 do
 (
     R = ZZ/101[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>{Weights=>weights#a, Lex}];
-    M = genericMatrix(R, 2, 7);
-    L = subsets(7, 6);
+    M = matrix{splice{x_11 .. x_17}, splice{x_21 .. x_27}}
+    L = subsets(7, 6)
     notgroebner = {};
 
     for i to (#L-1) do 
