@@ -143,8 +143,10 @@ for a to #weights-1 do
 	notgroebner = append(notgroebner, g);
     );
 
---
---
+-- Comments on lines 152-155:
+-- We first (line 152) create the ideal I whose basis is the set of determinantal polynomials which we called notgroebner.
+-- Then (line 153) we define groebner as the Groebner basis of I. Subsequently, we let notgroebnersize and groebnersize to be 
+-- the size of the set notgroebner and and groebner, respectively. 
 --
 
     I = ideal(notgroebner);
