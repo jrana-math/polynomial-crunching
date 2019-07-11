@@ -154,13 +154,13 @@ for a to #weights-1 do
     notgroebnersize = #notgroebner;
     groebnersize = numgens source groebner;
     
--- 
---
---
---
---
---
---
+-- Comments on lines 168-197:
+-- On lines 168 and 169, we define the counter of matches n and the flag for matches. This variable flag works as follows: whenever
+-- we get a match between determinantal polynomials and those that constitute a Groebner basis, we set flag=1. By doing that, when we go
+-- through the loop which starts on line 173, we break it on line 176 and goes to the outer loop - the one which starts on line 170).
+-- This, in turn, makes the program run faster.
+-- Note that we have three for loops here. One that acts on the groebner basis (lines 170-197), one on the set of determinantal 
+-- polynomials (lines 173-190) and the last on the integers from 1 to 100 (lines 178-188) due to our Galois field Z/101.
 --
 --
 --
