@@ -1,78 +1,4 @@
---Okay, so here's what I'm thinking.
---What we want is for each outer loop to generate a new set of weights to run our other program with.
---The inner loop is meant to form individual sets of weights, and the outer loop forms a list of all possible weight sets.
---We can build each weight set by converting i to binary and then listing its digits.
---Unfortunately, I don't think Macaulay has any built-in stuff relating to binary numbers.
---So what we need to do is write something in the body of the inner loop that will add a "1" to the list
---if the binary representation of i has a 1 there and a 0 otherwise.
---I don't know how to do that yet but it seems like we should be able to figure it out today.
-
-
-weights = {};
-weight = {};
-
-for i to 2^14-1 do 
-(
-    weight = {};
-    for j from 1 to 14 do
-    (
-        k = 1;
-	if i%(2^j) < 2^(j-1) then k = 0;
-	weight = append(weight, k);
-    );
-    weights = append(weights, weight);
-);
-
-matches = {};
-
-for a to #weights-1 do
-(
-    R = QQ[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>{Weights=>weights#a, Lex}];
-    M = genericMatrix(R, 2, 7);
-    L = subsets(7, 6);
-    notgroebner = {};
-
-    for i to (#L-1) do 
-    (
-	M1 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#2)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#2)}};
-	M2 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#3), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#3), M_(1, L#i#4)}};
-	M3 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#3), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#3), M_(1, L#i#5)}};
-	M4 = matrix{{1, 1, 1}, {M_(0, L#i#2), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#2), M_(1, L#i#4), M_(1, L#i#5)}};
-	M5 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#3)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#3)}};
-	M6 = matrix{{1, 1, 1}, {M_(0, L#i#0), M_(0, L#i#2), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#2), M_(1, L#i#4)}};
-	M7 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}};
-	M8 = matrix{{1, 1, 1}, {M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}};
-	g = det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8);
-	notgroebner = append(notgroebner, g);
-    );
-
-    I = ideal(notgroebner);
-    groebner = gens gb I;
-    notgroebnersize = #notgroebner;
-    groebnersize = numgens source groebner;
-
-    n=0;
-    for i to (groebnersize - 1) do (for j to (notgroebnersize-1) do (if groebner_(0, i) == notgroebner#j then n=n+1));
-    text = "The total number of matches is ";
-    nonumber = toString(n);
-    dot = ".";
-    p = text | nonumber | dot;
-    print p;
-    print weights#a;
-    if n == #groebner then matches = append(matches, weights#a);
-)
-
---The above code works!!!!
-
-
-
-
-
-----------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------
-
-
--- Comments on lines 88-101:
+-- Comments on lines 14-27:
 -- The sets weight and weights are different. weights is a collection of some 'weight's. They are both initialized as
 -- the empty set (lines 89 and 90) because that way we can create whichever set we like just by adding its elements. 
 -- weight is a string of ones and zeros. The frequency of one or zero happening varies between 0 and 7 while 
@@ -101,7 +27,7 @@ for i to 2^14-1 do
 );
 
 
--- Comments on lines 125-144:
+-- Comments on lines 50-71:
 -- On line 125, #weights is the size of weights - i.e. how many different vectors we have. On line 127, we define the ring
 -- on which we are working. As one can see, its order depends on weights#a. In general, if we have a list S of length k>n-2,
 -- then S#(n-1) has as its output the nth element listed on the list (set) S. So weights#a is the (a+1)th weight listed on
@@ -144,7 +70,7 @@ for a to #weights-1 do
 	notgroebner = append(notgroebner, g);
     );
 
--- Comments on lines 152-155:
+-- Comments on lines 79-82:
 -- We first (line 152) create the ideal I whose basis is the set of determinantal polynomials which we called notgroebner.
 -- Then (line 153) we define groebner as the Groebner basis of I. Subsequently, we let notgroebnersize and groebnersize to be 
 -- the size of the set notgroebner and and groebner, respectively. 
@@ -155,7 +81,7 @@ for a to #weights-1 do
     notgroebnersize = #notgroebner;
     groebnersize = numgens source groebner;
     
--- Comments on lines 168-197:
+-- Comments on lines 95-124:
 -- On lines 168 and 169, we define the counter of matches n and the flag for matches. This variable flag works as follows: whenever
 -- we get a match between determinantal polynomials and those that constitute a Groebner basis, we set flag=1. By doing that, when we go
 -- through the loop which starts on line 173, we break it on line 176 and goes to the outer loop - the one which starts on line 170).
@@ -197,7 +123,7 @@ for a to #weights-1 do
 	);
     );
     
--- Comments on lines 206-213:
+-- Comments on lines 133-141:
 -- On line 206 we create the empty set matches, which will eventually be the set of weights under which (and along with
 -- the lex order) we have that the set groebner is the subset of the set notgroebner. On line 208, we make the integer n
 -- into a string, where n is the number of matches between polynomials in the sets groebner and notgroebner. We then
