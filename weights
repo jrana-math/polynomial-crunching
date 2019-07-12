@@ -1,14 +1,14 @@
 -- Comments on lines 14-27:
 -- The sets weight and weights are different. weights is a collection of some 'weight's. They are both initialized as
--- the empty set (lines 89 and 90) because that way we can create whichever set we like just by adding its elements. 
+-- the empty set (lines 14 and 15) because that way we can create whichever set we like just by adding its elements. 
 -- weight is a string of ones and zeros. The frequency of one or zero happening varies between 0 and 7 while 
 -- freq(0)+freq(1)=2n always holds.
 -- We are more interested now in the case n=7, so that number means 'weights' is a set of vectors ('weight's) whose length  
 -- is 14 and entries are completed by 7 ones and zeros. 
 -- These 'weight's will be used along with the lex order to create several weight orders. 
--- The inner for loop we use (lines 95-100) is to characterize the sets called weight. Before it, we have a local variable
--- (line 94) that makes the set weight empty again, so we can repeat the process over and over. Immediately after the inner 
--- for loop (line 101) we use the function append(setS, elementK) that adds elementK to SetS. This is also used on line 98
+-- The inner for loop we use (lines 20-25) is to characterize the sets called weight. Before it, we have a local variable
+-- (line 19) that makes the set weight empty again, so we can repeat the process over and over. Immediately after the inner 
+-- for loop (line 26) we use the function append(setS, elementK) that adds elementK to SetS. This is also used on line 98
 -- to "add" the entries of the vectors weight.
 
 weights = {};
@@ -27,21 +27,21 @@ for i to 2^14-1 do
 );
 
 
--- Comments on lines 50-71:
--- On line 125, #weights is the size of weights - i.e. how many different vectors we have. On line 127, we define the ring
+-- Comments on lines 50-72:
+-- On line 52, #weights is the size of weights - i.e. how many different vectors we have. On line 54, we define the ring
 -- on which we are working. As one can see, its order depends on weights#a. In general, if we have a list S of length k>n-2,
 -- then S#(n-1) has as its output the nth element listed on the list (set) S. So weights#a is the (a+1)th weight listed on
--- the set weights. Also, our outer loop (lines 125-144) guarantees we deal with all of the different 'weight's.
--- On line 128 we define a 2x7 matrix M whose first and second rows would be, respectively, {x_11, ..., x_17} and {x_21, ..., x_27}.
--- On line 129 we define L to be the set of all subsets of order 6 of the set {0, 1, ..., 6}. On line 130, we create an 
+-- the set weights. Also, our outer loop (starting on lines 52) guarantees we deal with all of the different 'weight's.
+-- On line 56 we define a 2x7 matrix M whose first and second rows would be, respectively, {x_11, ..., x_17} and {x_21, ..., x_27}.
+-- On line 57 we define L to be the set of all subsets of order 6 of the set {0, 1, ..., 6}. On line 58, we create an 
 -- empty set called notgroebner. This set, in turn, will be the one containing our seven (at least for n=7) determinantal polynomials.
--- On the body of the for loop (lines 134-143), we first (134-141) create eight 3x3 matrices which we will use to get each of
+-- On the body of the for loop (lines 61-72), we first (62-69) create eight 3x3 matrices which we will use to get each of
 -- the seven (or n choose 6 in general) determinantal polynomials. On this part of the loop's body, we see a bunch of elements
 -- of the form L#i#j for an integer j in {0, 1, ..., }. The process for getting such a number is as follows: since L
 -- is the set containing all the subsets of order 6 of {0, 1, ..., 6}, L#i will be one of these subsets - e.g. i=1
 -- gives us {0, 1, ..., 5}. Once we have L#i, we take L#i#j, which is the (j+1)th element listed, from left to right, in L#i.
--- Secondly (line 142), we define, using remark 3.3 from the paper, one of the determinantal polynomials by g 
--- and then (line 143) add g to the set notgroebner. We do this process until notgroebner has all the n choose 6 polynomials
+-- Secondly (line 70), we define, using remark 3.3 from the paper, one of the determinantal polynomials by g 
+-- and then (line 71) add g to the set notgroebner. We do this process until notgroebner has all the n choose 6 polynomials
 -- that it is supposed to have. 
 --
 --
@@ -71,9 +71,9 @@ for a to #weights-1 do
 	notgroebner = append(notgroebner, g);
     );
 
--- Comments on lines 79-82:
--- We first (line 152) create the ideal I whose basis is the set of determinantal polynomials which we called notgroebner.
--- Then (line 153) we define groebner as the Groebner basis of I. Subsequently, we let notgroebnersize and groebnersize to be 
+-- Comments on lines 80-83:
+-- We first (line 80) create the ideal I whose basis is the set of determinantal polynomials which we called notgroebner.
+-- Then (line 81) we define groebner as the Groebner basis of I. Subsequently, we let notgroebnersize and groebnersize to be 
 -- the size of the set notgroebner and and groebner, respectively. 
 --
 
@@ -82,13 +82,13 @@ for a to #weights-1 do
     notgroebnersize = #notgroebner;
     groebnersize = numgens source groebner;
     
--- Comments on lines 95-124:
--- On lines 168 and 169, we define the counter of matches n and the flag for matches. This variable flag works as follows: whenever
+-- Comments on lines 96-125:
+-- On lines 96 and 97, we define the counter of matches n and the flag for matches. This variable flag works as follows: whenever
 -- we get a match between determinantal polynomials and those that constitute a Groebner basis, we set flag=1. By doing that, when we go
--- through the loop which starts on line 173, we break it on line 176 and goes to the outer loop - the one which starts on line 170).
+-- through the loop which starts on line 101, we break it on line 104 and goes to the outer loop - the one which starts on line 98.
 -- This, in turn, makes the program run faster.
--- Note that we have three for loops here. One that acts on the groebner basis (lines 170-197), one on the set of determinantal 
--- polynomials (lines 173-190) and the last on the integers from 1 to 100 (lines 178-188) due to our Galois field Z/101.
+-- Note that we have three for loops here. One that acts on the groebner basis (lines 98-125), one on the set of determinantal 
+-- polynomials (lines 101-118) and the last on the integers from 1 to 100 (lines 106-116) due to our finite field Z/101.
 --It seems that the matches are always occuring at k=1 or k=100, which could allow us to speed up the program much more.
 --
 --
@@ -124,12 +124,11 @@ for a to #weights-1 do
 	);
     );
     
--- Comments on lines 133-141:
--- On line 206 we create the empty set matches, which will eventually be the set of weights under which (and along with
--- the lex order) we have that the set groebner is the subset of the set notgroebner. On line 208, we make the integer n
--- into a string, where n is the number of matches between polynomials in the sets groebner and notgroebner. We then
--- print (line 211) the total number of matches and (line 212) we print the weight weights#a from the bigger loop (lines 
--- 125-214) and when matches happen as often as elements in the set groebner, then we add such a weight to the set matches. 
+-- Comments on lines 133-140:
+-- On line 134 we create the empty set matches, which will eventually be the set of weights under which (and along with
+-- the lex order) we have that the set groebner is the subset of the set notgroebner. On line 135, we make the integer n
+-- into a string, where n is the number of matches between polynomials in the sets groebner and notgroebner. We then print the weight
+-- weights#a from the bigger loop and when matches happen as often as elements in the set groebner, then we add such a weight to the set matches. 
     
     text = "The total number of matches is ";
     nonumber = toString(n);
