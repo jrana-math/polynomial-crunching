@@ -47,6 +47,7 @@ for i to 2^14-1 do
 --
 --
 
+matches = {};
 
 for a to #weights-1 do
 (
@@ -130,7 +131,6 @@ for a to #weights-1 do
 -- print (line 211) the total number of matches and (line 212) we print the weight weights#a from the bigger loop (lines 
 -- 125-214) and when matches happen as often as elements in the set groebner, then we add such a weight to the set matches. 
     
-    matches = {};
     text = "The total number of matches is ";
     nonumber = toString(n);
     dot = ".";
