@@ -55,7 +55,7 @@ for a to #weights-1 do
     N = vars R;
     M = matrix{{N_(0, 0), N_(0, 1), N_(0, 2), N_(0, 3), N_(0, 4), N_(0, 5), N_(0, 6)}, {N_(0, 7), N_(0, 8), N_(0, 9), N_(0, 10), N_(0, 11), N_(0, 12), N_(0, 13)}};
     L = subsets(7, 6);
-    notgroebner = {};
+    polynomials = {};
 
     for i to (#L-1) do 
     (
@@ -68,7 +68,7 @@ for a to #weights-1 do
 	M7 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}};
 	M8 = matrix{{1, 1, 1}, {M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}};
 	g = det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8);
-	notgroebner = append(notgroebner, g);
+	polynomials = append(polynomials, g);
     );
 
 -- Comments on lines 80-83:
@@ -77,9 +77,9 @@ for a to #weights-1 do
 -- the size of the set notgroebner and and groebner, respectively. 
 --
 
-    I = ideal(notgroebner);
+    I = ideal(polynomials);
     groebner = gens gb I;
-    notgroebnersize = #notgroebner;
+    polynomialsSize = #polynomials;
     groebnersize = numgens source groebner;
     
 -- Comments on lines 96-125:
@@ -168,7 +168,7 @@ for a to #weights-1 do
     N = vars R;
     M = matrix{{N_(0, 0), N_(0, 1), N_(0, 2), N_(0, 3), N_(0, 4), N_(0, 5), N_(0, 6)}, {N_(0, 7), N_(0, 8), N_(0, 9), N_(0, 10), N_(0, 11), N_(0, 12), N_(0, 13)}};
     L = subsets(7, 6);
-    notgroebner = {};
+    polynomials = {};
 
     for i to (#L-1) do 
     (
@@ -181,20 +181,20 @@ for a to #weights-1 do
 	M7 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}};
 	M8 = matrix{{1, 1, 1}, {M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}};
 	g = det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8);
-	notgroebner = append(notgroebner, g);
+	polynomials = append(polynomials, g);
     );
 
-    I = ideal(notgroebner);
+    I = ideal(polynomials);
     groebner = gens gb I;
-    notgroebnersize = #notgroebner;
+    polynomialsize = #polynomials;
     groebnersize = numgens source groebner;
     
     n=0;
     for i to groebnersize-1 do
     (
-        for j to notgroebnersize-1 do 
+        for j to polynomialsize-1 do 
 	(
-	    if (groebner_(0, i) == notgroebner#j or (-1)*groebner_(0, i) == notgroebner#j) then
+	    if (groebner_(0, i) == polynomials#j or (-1)*groebner_(0, i) == polynomials#j) then
 	    (
 		n=n+1;
 		break;
