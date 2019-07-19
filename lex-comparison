@@ -1,13 +1,12 @@
---This program is meant to compare the generators under each new ordering to the Groebner basis under Lex order.
---Unfortunately, it doesn't work. Macaulay2 doesn't seem to let us test equality of elements in different rings,
---and when I do a substitution I think it's reordering the polynomials. If it's not reordering, I think that the
---strict equality operator just doesn't check for differences in ordering?
---Regardless of the reason, it says that every single weighting produces a match, which is not what we want.
+--This program compares the leading terms of generators under each ordering to those of the Groebner basis under lex order.
+--So far, there are very few matches, which is interesting and not what we expected. It's possible that there is a bug in the code,
+--or maybe being a Groebner basis is less dependent on the ordering we choose as a tie-breaker than we thought.
 
 weights = {};
 weight = {};
 matches = {};
 
+--This section generates the weightings that we use throughout.
 for i to 2^14-1 do 
 (
     weight = {};
@@ -20,6 +19,7 @@ for i to 2^14-1 do
     weights = append(weights, weight);
 );
 
+--Here we create a Groebner basis with respect to Lex order.
     A = QQ[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>Lex];
     N = vars A;
     M = matrix{{N_(0, 0), N_(0, 1), N_(0, 2), N_(0, 3), N_(0, 4), N_(0, 5), N_(0, 6)}, {N_(0, 7), N_(0, 8), N_(0, 9), N_(0, 10), N_(0, 11), N_(0, 12), N_(0, 13)}};
@@ -44,8 +44,10 @@ for i to 2^14-1 do
     groebnermatrix = gens gb I;
     groebner = {};
     groebnersize = numgens source groebnermatrix;
-    for i to groebnersize-1 do (groebner = append(groebner, groebnermatrix_(0, i)));
+    for i to groebnersize-1 do (groebner = append(groebner, leadTerm(groebnermatrix_(0, i))));
+--In the above line we only record the lead terms of the Groebner basis, since that's what we need for comparison.
 
+--The body of our program is essentially the same as previous iterations.
 for a to #weights-1 do
 (
     R = QQ[splice {x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>{Weights=>weights#a, Lex}];
@@ -65,18 +67,22 @@ for a to #weights-1 do
 	M7 = matrix{{1, 1, 1}, {M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}};
 	M8 = matrix{{1, 1, 1}, {M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}};
 	g = det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8);
-	polynomials = append(polynomials, g);
+	polynomials = append(polynomials, leadTerm(g));
     );
+
+--Note that polynomials only consists of the leading terms in this version.
 
     polynomialsize = #polynomials;
     newgroebner = {sub(groebner#0, R), sub(groebner#1, R), sub(groebner#2, R), sub(groebner#3, R), sub(groebner#4, R), sub(groebner#5, R)};
+
+--Substituting into the ring works here because we don't have to worry about terms being reordered when there's only one term.
 
     n=0;
     for i to groebnersize-1 do
     (
         for j to polynomialsize-1 do 
 	(
-	    if (newgroebner#i === polynomials#j or (-1)*newgroebner#i === polynomials#j) then
+	    if (newgroebner#i == polynomials#j or (-1)*newgroebner#i == polynomials#j) then
 	    (
 		n=n+1;
 		break;
@@ -91,5 +97,4 @@ for a to #weights-1 do
     print p;
     print weights#a;
     if n == groebnersize then matches = append(matches, weights#a);
-    if n < groebnersize then print "NO MATCH";
-    );
+ );
