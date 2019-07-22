@@ -98,3 +98,109 @@ for a to #weights-1 do
     print weights#a;
     if n == groebnersize then matches = append(matches, weights#a);
  );
+ 
+ ####################################################################################################################################
+ 
+ --This version of the program is meant to check certain symmetric sets of weights in the full projective setting. It doesn't work.
+ 
+ weights = {};
+weight = {};
+matches = {};
+
+for i to 2^7-1 do 
+(
+    weight = {};
+    for j from 1 to 7 do
+    (
+        k = 1;
+	if i%(2^j) < 2^(j-1) then k = 0;
+	weight = append(weight, k);
+    );
+    for j from 1 to 7 do
+    (
+        k = 1;
+	if i%(2^j) < 2^(j-1) then k = 0;
+	weight = append(weight, k);
+    );
+    for j from 1 to 7 do
+    (
+        k = 1;
+	if i%(2^j) < 2^(j-1) then k = 0;
+	weight = append(weight, k);
+    );
+    weights = append(weights, weight);
+);
+
+    A = QQ[splice {x_01 .. x_07, x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>Lex];
+    N = vars A;
+    M = matrix{{N_(0, 0), N_(0, 1), N_(0, 2), N_(0, 3), N_(0, 4), N_(0, 5), N_(0, 6)}, {N_(0, 7), N_(0, 8), N_(0, 9), N_(0, 10), N_(0, 11), N_(0, 12), N_(0, 13)}, {N_(0, 14), N_(0, 15), N_(0, 16), N_(0, 17), N_(0, 18), N_(0, 19), N_(0, 20)}};
+    L = subsets(7, 6);
+    polynomials = {};
+
+    for i to (#L-1) do 
+    (
+	M1 = matrix{{M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#2)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#2)}, {M_(2, L#i#0), M_(2, L#i#1), M_(2, L#i#2)}};
+	M2 = matrix{{M_(0, L#i#0), M_(0, L#i#3), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#3), M_(1, L#i#4)}, {M_(2, L#i#0), M_(2, L#i#3), M_(2, L#i#4)}};
+	M3 = matrix{{M_(0, L#i#1), M_(0, L#i#3), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#3), M_(1, L#i#5)}, {M_(2, L#i#1), M_(2, L#i#3), M_(2, L#i#5)}};
+	M4 = matrix{{M_(0, L#i#2), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#2), M_(1, L#i#4), M_(1, L#i#5)}, {M_(2, L#i#2), M_(2, L#i#4), M_(2, L#i#5)}};
+	M5 = matrix{{M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#3)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#3)}, {M_(2, L#i#0), M_(2, L#i#1), M_(2, L#i#3)}};
+	M6 = matrix{{M_(0, L#i#0), M_(0, L#i#2), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#2), M_(1, L#i#4)}, {M_(2, L#i#0), M_(2, L#i#2), M_(2, L#i#4)}};
+	M7 = matrix{{M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}, {M_(2, L#i#1), M_(2, L#i#2), M_(2, L#i#5)}};
+	M8 = matrix{{M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}, {M_(2, L#i#3), M_(2, L#i#4), M_(2, L#i#5)}};
+	g = det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8);
+	polynomials = append(polynomials, g);
+    );
+
+    I = ideal(polynomials);
+    groebnermatrix = gens gb I;
+    groebner = {};
+    groebnersize = numgens source groebnermatrix;
+    for i to groebnersize-1 do (groebner = append(groebner, leadTerm(groebnermatrix_(0, i))));
+
+for a to #weights-1 do
+(
+    R = QQ[splice {x_01 .. x_07, x_11 .. x_17, x_21 .. x_27}, MonomialOrder=>{Weights=>weights#a, Lex}];
+    N = vars R;
+    M = matrix{{N_(0, 0), N_(0, 1), N_(0, 2), N_(0, 3), N_(0, 4), N_(0, 5), N_(0, 6)}, {N_(0, 7), N_(0, 8), N_(0, 9), N_(0, 10), N_(0, 11), N_(0, 12), N_(0, 13)}, {N_(0, 14), N_(0, 15), N_(0, 16), N_(0, 17), N_(0, 18), N_(0, 19), N_(0, 20)}};
+    L = subsets(7, 6);
+    polynomials = {};
+
+    for i to (#L-1) do 
+    (
+	M1 = matrix{{M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#2)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#2)}, {M_(2, L#i#0), M_(2, L#i#1), M_(2, L#i#2)}};
+	M2 = matrix{{M_(0, L#i#0), M_(0, L#i#3), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#3), M_(1, L#i#4)}, {M_(2, L#i#0), M_(2, L#i#3), M_(2, L#i#4)}};
+	M3 = matrix{{M_(0, L#i#1), M_(0, L#i#3), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#3), M_(1, L#i#5)}, {M_(2, L#i#1), M_(2, L#i#3), M_(2, L#i#5)}};
+	M4 = matrix{{M_(0, L#i#2), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#2), M_(1, L#i#4), M_(1, L#i#5)}, {M_(2, L#i#2), M_(2, L#i#4), M_(2, L#i#5)}};
+	M5 = matrix{{M_(0, L#i#0), M_(0, L#i#1), M_(0, L#i#3)}, {M_(1, L#i#0), M_(1, L#i#1), M_(1, L#i#3)}, {M_(2, L#i#0), M_(2, L#i#1), M_(2, L#i#3)}};
+	M6 = matrix{{M_(0, L#i#0), M_(0, L#i#2), M_(0, L#i#4)}, {M_(1, L#i#0), M_(1, L#i#2), M_(1, L#i#4)}, {M_(2, L#i#0), M_(2, L#i#2), M_(2, L#i#4)}};
+	M7 = matrix{{M_(0, L#i#1), M_(0, L#i#2), M_(0, L#i#5)}, {M_(1, L#i#1), M_(1, L#i#2), M_(1, L#i#5)}, {M_(2, L#i#1), M_(2, L#i#2), M_(2, L#i#5)}};
+	M8 = matrix{{M_(0, L#i#3), M_(0, L#i#4), M_(0, L#i#5)}, {M_(1, L#i#3), M_(1, L#i#4), M_(1, L#i#5)}, {M_(2, L#i#3), M_(2, L#i#4), M_(2, L#i#5)}};
+	g = det(M1)*det(M2)*det(M3)*det(M4)-det(M5)*det(M6)*det(M7)*det(M8);
+	polynomials = append(polynomials, leadTerm(g));
+    );
+
+    polynomialsize = #polynomials;
+    newgroebner = {sub(groebner#0, R), sub(groebner#1, R), sub(groebner#2, R), sub(groebner#3, R), sub(groebner#4, R), sub(groebner#5, R), sub(groebner#6, R)};
+
+    n=0;
+    for i to groebnersize-1 do
+    (
+        for j to polynomialsize-1 do 
+	(
+	    if (newgroebner#i == polynomials#j or (-1)*newgroebner#i == polynomials#j) then
+	    (
+		n=n+1;
+		break;
+	    );
+	);
+    );
+    
+    text = "The total number of matches is ";
+    nonumber = toString(n);
+    dot = ".";
+    p = text | nonumber | dot;
+    print p;
+    print weights#a;
+    if n == groebnersize then matches = append(matches, weights#a);
+ );
+ 
